@@ -30,12 +30,8 @@ for(let j = 0; j<keyboard.length; j++){
 
 function Check(line){
 
-  
-
   var greens = 0;
-  //pass the line
-
-  console.log(line);
+ 
   var currentLineWord = document.querySelector(".line" + (line+1)).children;
   var userInput = "";
 
@@ -45,22 +41,16 @@ function Check(line){
 
   if(isValidWord(userInput) == true){
 
-  console.log(userInput);
-
   var wordsleft = word;
-
-  console.log(userInput);
 
   var message = [" ", " " ," ", " ", " "];
 
   for(let i = 0; i<5; i++){
   if(word.charAt(i) == userInput.charAt(i)){
-    
+  
     message[i] = "seagreen";
     greens++;
-
     wordsleft = wordsleft.replace(userInput.charAt(i), "");
-    console.log(wordsleft);
     
   }
 
@@ -76,20 +66,15 @@ for(let i = 0; i<5; i++){
     message[i] = "darkkhaki";
     wordsleft = wordsleft.replace(userInput.charAt(i), "");
     }
-    console.log(wordsleft);
     
   }
 }
-
-console.log(message.length);
 
 for(let j = 0; j<message.length; j++){
  
   currentLineWord[j].style.backgroundColor = ("" + message[j]);
   currentLineWord[j].style.color = ("white");
   var kbd = document.getElementById("" + currentLineWord[j].innerText);
-  console.log(kbd);
-  console.log(message);
   kbd.style.backgroundColor = ("" + message[j]);
   kbd.style.color = ("white");
 
@@ -132,24 +117,17 @@ function addLetter(e){
 
   var key = e;
 
-  console.log(e);
-
   if((typeof e) !== "string"){
     key = e.key;
   }
-
-  console.log(key);
 
   var keyCode = key.codePointAt(0);
 
   if(key == "Enter"){
 
     if(i==5 && (Check(line) == true)){
-      console.log(line);
     line++;
-    console.log(line);
     i = 0;
-    console.log(line);
     }
 
     else if(i < 5){
@@ -164,14 +142,11 @@ function addLetter(e){
       box[line].innerText = "";
         i--;
       }     
-      console.log(i);
     }
   
   if(i<5){
-    console.log(i);
     if( (key.length < 2) && ( (keyCode > 64 && keyCode < 91) || (keyCode > 96 && keyCode < 123) ) ){
       i++;
-      console.log(i);
       var box = document.querySelectorAll(".box" + i);
       box[line].innerText = key.toUpperCase();
      

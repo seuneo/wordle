@@ -1,0 +1,281 @@
+//wordle
+
+
+/*
+var word = "grace";//original word
+var userInput = "rager";
+var message = [" ", " " ," ", " ", " "];
+
+var wordsleft = word;// og word copy
+
+//check for greens;
+for(let i = 0; i<5; i++){
+  if(word.charAt(i) == userInput.charAt(i)){
+    
+    message[i] = "g";
+    wordsleft = wordsleft.replace(userInput.charAt(i), "");
+    console.log(wordsleft);
+
+    console.log(message);
+    
+  }
+
+  else{
+
+    message[i] = "r";
+    
+  }
+}
+
+for(let i = 0; i<5; i++){
+  if(wordsleft.includes(userInput.charAt(i)) == true){
+    
+    if(message[i] != "g"){
+    message[i] = "y";
+    wordsleft = wordsleft.replace(userInput.charAt(i), "");
+    }
+    console.log(wordsleft);
+
+    
+  }
+}
+
+
+console.log(message);
+*/
+
+
+//read words from text file
+
+import {words} from "./pastWordle.js";
+import {validWords} from "./wordList2.js";
+
+
+var word = words[Math.floor(Math.random() * 900)].toUpperCase();
+
+var alert = document.querySelector(".alert");
+function alertMessage(m){
+
+  alert.innerText = m;
+  //show message
+  setTimeout(function(){
+    alert.style.display = "block";
+  }, 1);
+
+  setTimeout(function(){
+    alert.style.display = "none";
+  }, 900);
+}
+
+
+var keyboard = document.querySelectorAll("span");
+
+for(let j = 0; j<keyboard.length; j++){
+  keyboard[j].addEventListener("click", whichLetter);
+}
+
+function Check(line){
+
+  
+
+  var greens = 0;
+  //pass the line
+
+  console.log(line);
+  var currentLineWord = document.querySelector(".line" + (line+1)).children;
+  var userInput = "";
+
+  for(let j = 0; j<5; j++){
+    userInput += currentLineWord[j].innerText;
+  }
+
+  if(isValidWord(userInput) == true){
+
+  console.log(userInput);
+
+  var wordsleft = word;
+
+  console.log(userInput);
+
+  var message = [" ", " " ," ", " ", " "];
+
+  for(let i = 0; i<5; i++){
+  if(word.charAt(i) == userInput.charAt(i)){
+    
+    message[i] = "seagreen";
+    greens++;
+
+    wordsleft = wordsleft.replace(userInput.charAt(i), "");
+    console.log(wordsleft);
+    
+  }
+
+  else{
+
+    message[i] = "crimson";
+    
+  }
+}
+
+for(let i = 0; i<5; i++){
+  if(wordsleft.includes(userInput.charAt(i)) == true){
+    
+    if(message[i] != "seagreen"){
+    message[i] = "darkkhaki";
+    wordsleft = wordsleft.replace(userInput.charAt(i), "");
+    }
+    console.log(wordsleft);
+    
+  }
+}
+
+console.log(message.length);
+
+for(let j = 0; j<message.length; j++){
+
+  
+  currentLineWord[j].style.backgroundColor = ("" + message[j]);
+  currentLineWord[j].style.color = ("white");
+  var kbd = document.getElementById("" + currentLineWord[j].innerText);
+  console.log(kbd);
+  console.log(message);
+  kbd.style.backgroundColor = ("" + message[j]);
+  kbd.style.color = ("white");
+
+}
+
+if(greens == 5){
+  setTimeout(function(){alertMessage("You win")}, 10);
+  document.removeEventListener("keydown", addLetter);
+
+  for(let j = 0; j<keyboard.length; j++){
+    keyboard[j].removeEventListener("click", whichLetter);
+  }
+
+}
+
+return true;
+
+  }
+
+  else{
+    alertMessage("Not in word list");
+    return false;
+  }
+
+}
+
+
+//
+var line  = 0;
+var i = 0;
+
+document.addEventListener("keydown", addLetter);
+
+function addLetter(e){
+
+  if(line == 6){
+    document.removeEventListener("keydown", addLetter);
+    for(let j = 0; j<keyboard.length; j++){
+      keyboard[j].removeEventListener("click", whichLetter);
+    }
+  }
+
+  /*
+  var key = e.key
+  var keyCode = key.codePointAt(0);
+  */
+
+  
+
+  var key = e;
+
+  console.log(e);
+
+  if((typeof e) !== "string"){
+    key = e.key;
+  }
+
+  console.log(key);
+
+  var keyCode = key.codePointAt(0);
+
+
+  if(key == "Enter"){
+
+    if(i==5 && (Check(line) == true)){
+      console.log(line);
+    line++;
+    console.log(line);
+    i = 0;
+    console.log(line);
+    }
+
+    else if(i < 5){
+      //alert("not enough letters");
+      alertMessage("Not enough letters");
+    }
+    
+  }
+
+
+  if(i>0){
+    if(key == "Backspace"){
+
+      var box = document.querySelectorAll(".box" + i);
+      box[line].innerText = "";
+        i--;
+      }     
+      console.log(i);
+    }
+  
+  if(i<5){
+    console.log(i);
+    if( (key.length < 2) && ( (keyCode > 64 && keyCode < 91) || (keyCode > 96 && keyCode < 123) ) ){
+      i++;
+      console.log(i);
+      var box = document.querySelectorAll(".box" + i);
+      box[line].innerText = key.toUpperCase();
+      
+    }
+
+  }
+
+}
+
+function whichLetter(e){
+
+
+  
+  var letter = e.target.id;
+  addLetter(letter.toString());
+
+
+}
+//notes
+//you win
+//you lose
+//valid word
+
+function isValidWord(w){
+
+var firstLetter = w.charAt(0);
+
+  //check if user has word
+  var firstLetters = Object.keys(validWords);
+  var index = firstLetters.indexOf(firstLetter);
+
+  var wordsOfLetter = Object.values(validWords)[index];
+  return wordsOfLetter.includes(w.toLowerCase()); 
+}
+
+
+
+var resetButton  = document.querySelector(".reset");
+
+resetButton.addEventListener("click", newGame);
+
+function newGame(){
+
+  alertMessage("Refresh browser for new game")
+}

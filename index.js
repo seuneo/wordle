@@ -1,54 +1,8 @@
 //wordle
 
-
-/*
-var word = "grace";//original word
-var userInput = "rager";
-var message = [" ", " " ," ", " ", " "];
-
-var wordsleft = word;// og word copy
-
-//check for greens;
-for(let i = 0; i<5; i++){
-  if(word.charAt(i) == userInput.charAt(i)){
-    
-    message[i] = "g";
-    wordsleft = wordsleft.replace(userInput.charAt(i), "");
-    console.log(wordsleft);
-
-    console.log(message);
-    
-  }
-
-  else{
-
-    message[i] = "r";
-    
-  }
-}
-
-for(let i = 0; i<5; i++){
-  if(wordsleft.includes(userInput.charAt(i)) == true){
-    
-    if(message[i] != "g"){
-    message[i] = "y";
-    wordsleft = wordsleft.replace(userInput.charAt(i), "");
-    }
-    console.log(wordsleft);
-
-    
-  }
-}
-
-
-console.log(message);
-*/
-
-
 //read words from text file
-
 import {words} from "./pastWordle.js";
-import {validWords} from "./wordList2.js";
+import {validWords} from "./wordList.js";
 
 
 var word = words[Math.floor(Math.random() * 900)].toUpperCase();
@@ -111,15 +65,13 @@ function Check(line){
   }
 
   else{
-
-    message[i] = "crimson";
-    
+    message[i] = "crimson";  
   }
 }
 
 for(let i = 0; i<5; i++){
   if(wordsleft.includes(userInput.charAt(i)) == true){
-    
+   
     if(message[i] != "seagreen"){
     message[i] = "darkkhaki";
     wordsleft = wordsleft.replace(userInput.charAt(i), "");
@@ -132,8 +84,7 @@ for(let i = 0; i<5; i++){
 console.log(message.length);
 
 for(let j = 0; j<message.length; j++){
-
-  
+ 
   currentLineWord[j].style.backgroundColor = ("" + message[j]);
   currentLineWord[j].style.color = ("white");
   var kbd = document.getElementById("" + currentLineWord[j].innerText);
@@ -165,8 +116,6 @@ return true;
 
 }
 
-
-//
 var line  = 0;
 var i = 0;
 
@@ -181,13 +130,6 @@ function addLetter(e){
     }
   }
 
-  /*
-  var key = e.key
-  var keyCode = key.codePointAt(0);
-  */
-
-  
-
   var key = e;
 
   console.log(e);
@@ -200,7 +142,6 @@ function addLetter(e){
 
   var keyCode = key.codePointAt(0);
 
-
   if(key == "Enter"){
 
     if(i==5 && (Check(line) == true)){
@@ -212,12 +153,9 @@ function addLetter(e){
     }
 
     else if(i < 5){
-      //alert("not enough letters");
       alertMessage("Not enough letters");
-    }
-    
+    }   
   }
-
 
   if(i>0){
     if(key == "Backspace"){
@@ -236,26 +174,17 @@ function addLetter(e){
       console.log(i);
       var box = document.querySelectorAll(".box" + i);
       box[line].innerText = key.toUpperCase();
-      
+     
     }
-
   }
-
 }
 
 function whichLetter(e){
 
-
-  
   var letter = e.target.id;
   addLetter(letter.toString());
 
-
 }
-//notes
-//you win
-//you lose
-//valid word
 
 function isValidWord(w){
 
@@ -269,13 +198,10 @@ var firstLetter = w.charAt(0);
   return wordsOfLetter.includes(w.toLowerCase()); 
 }
 
-
-
 var resetButton  = document.querySelector(".reset");
 
 resetButton.addEventListener("click", newGame);
 
 function newGame(){
-
   alertMessage("Refresh browser for new game")
 }

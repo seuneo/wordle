@@ -151,8 +151,7 @@ line :hover{
 
     .line1, .line2, .line3, .line4, .line5, .line6{
         width: 710px;
-        margin: 0.4em;
-
+        margin: 5.5px;
        
     }
 
@@ -162,14 +161,14 @@ line :hover{
     }   
 
     #game{
-        margin-top: 6em;
-        margin-bottom: 6em;
+        margin-top: 100px;
+        margin-bottom: 100px;
+        font-size: 40px;
     }
 
     .kbd{
         height: 400px;
-        width: 900px;
-       
+        width: 900px;  
         
     }
     
@@ -192,5 +191,12 @@ line :hover{
         border: 0.1em solid rgb(34, 34, 34);
         border-radius: 2em;
     }
+
+    .alert{
+        font-size: 35px;
+    }
+    
+
+}
 
 }

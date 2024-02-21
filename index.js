@@ -75,7 +75,11 @@ for(let j = 0; j<message.length; j++){
   currentLineWord[j].style.backgroundColor = ("" + message[j]);
   currentLineWord[j].style.color = ("white");
   var kbd = document.getElementById("" + currentLineWord[j].innerText);
+
+  if(kbd.style.backgroundColor == ""){
   kbd.style.backgroundColor = ("" + message[j]);
+  }
+  
   kbd.style.color = ("white");
 
 }
